@@ -42,6 +42,18 @@ body:
     validations:
       required: true
 
+  - type: dropdown
+    id: hook
+    attributes:
+      label: 钩子类型
+      description: 这个插件在什么时候起作用
+      options:
+        - 收到消息时（on_message）—— 加命令、加功能
+        - 回复发出前（on_reply）—— 改写/过滤机器人说的话
+        - 两个都有
+    validations:
+      required: true
+
   - type: textarea
     id: code
     attributes:

@@ -48,6 +48,62 @@ index.json：每条必须有 id，id 不重复，path/file 必须指向真实文
 > 我没有开「任何人可直接 push」——那样谁都能改 `index.json` 把别人的插件指到奇怪的地方。
 > PR + CI 是这里唯一安全的开放方式。
 
+
+## 能挂哪些钩子
+
+一个插件是**一个 .py 文件**，里面按需写下面任意几个钩子即可（全都不写也能装，只是什么也不做）。
+
+| 钩子 | 时机 | 签名 | 返回值 |
+|---|---|---|---|
+| **`on_message`** | 收到消息，主流程之前 | `on_message(ctx)` | 返回 `True`／非空 → 这条消息算处理完了；返回 `str` → 当成回复发出去；返回 `None`/`False` → 交给下一个插件 |
+| **`commands`** | 面板展示命令表 | `commands()` | `{"/命令": "说明"}`，列表、元组也认 |
+| **`on_reply`** | **回复要发出去之前**（QQ 私聊 / 群聊 / 桌面聊天都走） | `on_reply(ans, ctx)` | 返回新字符串 → 用新的；返回其他 → 用原句 |
+| `setup` / `register` | 插件加载时一次 | `setup(ctx)` | 忽略；抛异常只记 warning |
+| `ENABLED` / `NAME` / `VERSION` | 元数据 | — | 有就填，没有也能跑 |
+
+### 别名与容错
+
+支持但不限于这些写法，写错名字也尽量能跑：
+
+```
+on_message / handle / on_msg / handle_message / on_event / run     消息入口
+on_reply / rewrite_reply / post_reply                              回复改写
+commands / get_commands / COMMANDS / CMDS                          命令表
+```
+
+- 同步函数（`def`）和异步函数（`async def`）都收，同步的不会阻塞事件循环之外的逻辑
+- 签名会自动降级：`fn(ctx)` → `fn(text, ctx)` → `fn(text)` → `fn()`
+- `ctx` 既能 `ctx["text"]` 也能 `ctx.text`，还带 `reply(text)` 可 await 可同步
+- 类式插件（`class MyPlugin` 带上面任一方法）会自动实例化后使用
+
+### 两个最小例子
+
+**回一句话**
+
+```python
+NAME = "打招呼"
+VERSION = "1.0.0"
+
+async def on_message(ctx):
+    if ctx["text"].startswith("/你好"):
+        await ctx["reply"]("你好呀。")
+        return True
+    return False
+```
+
+**改写回复**（去口癖这类就用这个）
+
+```python
+NAME = "别叫我哦"
+VERSION = "1.0.0"
+
+def on_reply(ans, ctx=None):
+    return ans.replace("哦。", "嗯。")
+```
+
+> 官方那支 `ds_tics.py`（去 DS 口癖）就是挂在 `on_reply` 上：所有出站文字都会过一遍，
+> 删掉「这句话稳 / 我不接 / 比之前的都重」这类模型自带的口头禅。
+
 ## 目录约定
 
 ```
