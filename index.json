@@ -1,0 +1,92 @@
+{
+  "version": 1,
+  "updated": "2026-11-06",
+  "plugins": [
+    {
+      "id": "ds_tics",
+      "file": "ds_tics.py",
+      "path": "plugins/ds_tics.py",
+      "name": "去 DS 口癖",
+      "version": "1.1.0",
+      "author": "ShaYu",
+      "desc": "删掉模型自带的「这句话稳 / 我不接 / 比之前的都重 / 我记着了 / 我守着」这类口头禅，让回复回到她自己的口气",
+      "tags": [
+        "表达",
+        "人设",
+        "必备"
+      ],
+      "url": "https://raw.githubusercontent.com/Chengnanqwq/shayu-plugins/main/plugins/ds_tics.py"
+    },
+    {
+      "file": "memes.py",
+      "name": "表情图库",
+      "version": "1.1.0",
+      "author": "ShaYu",
+      "desc": "接 emotes/ 体系：收到图自动入库，/发表情 随机发一张，回话时顺手甩图",
+      "tags": [
+        "聊天",
+        "娱乐",
+        "表情"
+      ],
+      "url": "https://raw.githubusercontent.com/Chengnanqwq/shayu-plugins/main/plugins/memes.py",
+      "id": "memes",
+      "path": "plugins/memes.py"
+    },
+    {
+      "file": "qzone.py",
+      "name": "QQ空间",
+      "version": "1.0.0",
+      "author": "ShaYu",
+      "desc": "读说说 / 点赞 / 评论 / 回复 / 看访客 / 发说说，全部走 OneBot 接口",
+      "tags": [
+        "社交",
+        "空间"
+      ],
+      "url": "https://raw.githubusercontent.com/Chengnanqwq/shayu-plugins/main/plugins/qzone.py",
+      "id": "qzone",
+      "path": "plugins/qzone.py"
+    },
+    {
+      "file": "profile.py",
+      "name": "QQ资料",
+      "version": "1.0.0",
+      "author": "ShaYu",
+      "desc": "改昵称、换头像、看头像列表；头像从安装目录的 avatars/ 里挑",
+      "tags": [
+        "社交",
+        "资料"
+      ],
+      "url": "https://raw.githubusercontent.com/Chengnanqwq/shayu-plugins/main/plugins/profile.py",
+      "id": "profile",
+      "path": "plugins/profile.py"
+    },
+    {
+      "file": "signature.py",
+      "name": "改签名",
+      "version": "1.0.0",
+      "author": "ShaYu",
+      "desc": "改 QQ 长签名：每天限 10 次，记住历史，也认自然语言「把签名改成…」",
+      "tags": [
+        "社交",
+        "资料"
+      ],
+      "url": "https://raw.githubusercontent.com/Chengnanqwq/shayu-plugins/main/plugins/signature.py",
+      "id": "signature",
+      "path": "plugins/signature.py"
+    },
+    {
+      "file": "demo.py",
+      "name": "插件示例",
+      "version": "1.0.0",
+      "author": "ShaYu",
+      "desc": "最小可跑示例：commands() 声明命令、on_message() 处理消息，照着改就能写自己的",
+      "tags": [
+        "示例",
+        "开发"
+      ],
+      "url": "https://raw.githubusercontent.com/Chengnanqwq/shayu-plugins/main/plugins/demo.py",
+      "id": "demo",
+      "path": "plugins/demo.py"
+    }
+  ]
+}

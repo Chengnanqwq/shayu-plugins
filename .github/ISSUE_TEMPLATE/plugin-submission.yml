@@ -1,0 +1,68 @@
+name: 投稿一个插件
+description: 不会用 git 也行——填这个表，审核通过后由维护者代为提交
+title: "[插件投稿] "
+labels: ["插件投稿"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        填完直接提交即可。维护者看到后会跑一遍校验，通过就并进 `plugins/`，面板里立刻能看到。
+        你也可以自己提 PR（见 CONTRIBUTING）。
+
+  - type: input
+    id: plugin_name
+    attributes:
+      label: 插件名
+      placeholder: 例如 每日运势
+    validations:
+      required: true
+
+  - type: input
+    id: file_name
+    attributes:
+      label: 英文文件名（会变成 plugins/<这个名字>.py）
+      placeholder: 例如 daily_fortune
+      description: 只能是字母、数字、下划线、横线
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: 版本号
+      placeholder: "1.0.0"
+    validations:
+      required: true
+
+  - type: textarea
+    id: desc
+    attributes:
+      label: 一句话说明它干什么
+      placeholder: 例如「说『今日运势』时随机给一条，带宜忌」
+    validations:
+      required: true
+
+  - type: textarea
+    id: code
+    attributes:
+      label: 插件代码（整个 .py 贴进来）
+      description: 必须包含 NAME、VERSION，以及 on_message(ctx) 或 commands()
+      render: python
+    validations:
+      required: true
+
+  - type: input
+    id: deps
+    attributes:
+      label: 依赖（没有就留空）
+      placeholder: 例如 requests
+
+  - type: checkboxes
+    id: promise
+    attributes:
+      label: 确认
+      options:
+        - label: 代码里没有密钥、没有写死本机路径、不读取用户隐私
+          required: true
+        - label: 允许以 MIT 许可收录进本仓库
+          required: true
