@@ -7,7 +7,7 @@
       "file": "ds_tics.py",
       "path": "plugins/ds_tics.py",
       "name": "去 DS 口癖",
-      "version": "1.1.0",
+      "version": "1.1.1",
       "author": "ShaYu",
       "desc": "删掉模型自带的「这句话稳 / 我不接 / 比之前的都重 / 我记着了 / 我守着」这类口头禅，让回复回到她自己的口气",
       "tags": [
