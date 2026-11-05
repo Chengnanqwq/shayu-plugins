@@ -87,6 +87,62 @@
       "url": "https://raw.githubusercontent.com/Chengnanqwq/shayu-plugins/main/plugins/demo.py",
       "id": "demo",
       "path": "plugins/demo.py"
+    },
+    {
+      "id": "time_sense",
+      "file": "time_sense.py",
+      "path": "plugins/time_sense.py",
+      "name": "时间感知",
+      "version": "1.0.0",
+      "author": "ShaYu",
+      "desc": "本地报时/报日期/算周末倒计时，不消耗模型额度",
+      "tags": [
+        "工具",
+        "效率"
+      ],
+      "url": "https://raw.githubusercontent.com/Chengnanqwq/shayu-plugins/main/plugins/time_sense.py"
+    },
+    {
+      "id": "no_repeat",
+      "file": "no_repeat.py",
+      "path": "plugins/no_repeat.py",
+      "name": "防复读",
+      "version": "1.0.0",
+      "author": "ShaYu",
+      "desc": "连续几轮说同一句话时自动换掉，别当复读机",
+      "tags": [
+        "表达",
+        "人设"
+      ],
+      "url": "https://raw.githubusercontent.com/Chengnanqwq/shayu-plugins/main/plugins/no_repeat.py"
+    },
+    {
+      "id": "brevity",
+      "file": "brevity.py",
+      "path": "plugins/brevity.py",
+      "name": "收短",
+      "version": "1.0.0",
+      "author": "ShaYu",
+      "desc": "把一段话收成一两句，去掉客服腔和长篇大论",
+      "tags": [
+        "表达",
+        "人设"
+      ],
+      "url": "https://raw.githubusercontent.com/Chengnanqwq/shayu-plugins/main/plugins/brevity.py"
+    },
+    {
+      "id": "out_of_character_guard",
+      "file": "out_of_character_guard.py",
+      "path": "plugins/out_of_character_guard.py",
+      "name": "兜底防出戏",
+      "version": "1.0.0",
+      "author": "ShaYu",
+      "desc": "回复里出现「作为AI/语言模型/我无法」时切掉，防止人设崩",
+      "tags": [
+        "表达",
+        "安全"
+      ],
+      "url": "https://raw.githubusercontent.com/Chengnanqwq/shayu-plugins/main/plugins/out_of_character_guard.py"
     }
   ]
 }
