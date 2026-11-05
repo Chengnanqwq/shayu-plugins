@@ -143,6 +143,34 @@
         "安全"
       ],
       "url": "https://raw.githubusercontent.com/Chengnanqwq/shayu-plugins/main/plugins/out_of_character_guard.py"
+    },
+    {
+      "id": "panel_tools",
+      "file": "panel_tools.py",
+      "path": "plugins/panel_tools.py",
+      "name": "面板小工具",
+      "version": "1.0.0",
+      "author": "ShaYu",
+      "desc": "往面板右下角放一张状态卡片：在线状态 + 记忆条数 + 刷新，演示插件如何改应用界面",
+      "tags": [
+        "界面",
+        "应用级"
+      ],
+      "url": "https://raw.githubusercontent.com/Chengnanqwq/shayu-plugins/main/plugins/panel_tools.py"
+    },
+    {
+      "id": "timer_demo",
+      "file": "timer_demo.py",
+      "path": "plugins/timer_demo.py",
+      "name": "定时提醒",
+      "version": "1.0.0",
+      "author": "ShaYu",
+      "desc": "每 10 分钟看一眼记忆涨跌，需要时给主人推一条（演示插件 API / 定时器）",
+      "tags": [
+        "示例",
+        "开发"
+      ],
+      "url": "https://raw.githubusercontent.com/Chengnanqwq/shayu-plugins/main/plugins/timer_demo.py"
     }
   ]
 }
