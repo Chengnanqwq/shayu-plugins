@@ -171,6 +171,21 @@
         "开发"
       ],
       "url": "https://raw.githubusercontent.com/Chengnanqwq/shayu-plugins/main/plugins/timer_demo.py"
+    },
+    {
+      "id": "session_probe",
+      "file": "session_probe.py",
+      "path": "plugins/session_probe.py",
+      "name": "连续会话自测",
+      "version": "1.0.0",
+      "author": "ShaYu",
+      "desc": "多轮压力测试：连续追问看人设是否稳定，口径是「只有明确拒绝才算守住」",
+      "tags": [
+        "测试",
+        "开发"
+      ],
+      "enabled_by_default": false,
+      "url": "https://raw.githubusercontent.com/Chengnanqwq/shayu-plugins/main/plugins/session_probe.py"
     }
   ]
 }
