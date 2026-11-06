@@ -7,15 +7,16 @@
       "file": "ds_tics.py",
       "path": "plugins/ds_tics.py",
       "name": "去 DS 口癖",
-      "version": "1.1.1",
+      "version": "1.2.0",
       "author": "ShaYu",
-      "desc": "删掉模型自带的「这句话稳 / 我不接 / 比之前的都重 / 我记着了 / 我守着」这类口头禅，让回复回到她自己的口气",
+      "desc": "删掉模型自带的口头禅（按「DS 口癖大全」补齐 50 条：但他没躲 / 这个账我记住了 / 睡吧我守着 / 没接你的话茬 / 认你 / 认得实 / 什么心思都写在xx上 …），半句口癖只删半句，正常句子不动",
       "tags": [
         "表达",
         "人设",
         "必备"
       ],
-      "url": "https://raw.githubusercontent.com/Chengnanqwq/shayu-plugins/main/plugins/ds_tics.py"
+      "url": "https://raw.githubusercontent.com/Chengnanqwq/shayu-plugins/main/plugins/ds_tics.py",
+      "size": 5571
     },
     {
       "file": "memes.py",
