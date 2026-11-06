@@ -111,6 +111,7 @@ def setup(api):
 | `api.cfg(key=None, default=None)` | 读配置（不传 key 返回整个 dict） |
 | `api.set_cfg(key, value)` | 写配置 |
 | `api.notify(text)` | 给主人推一条消息（走 bot 自己的通道） |
+| `api.send(user_id, text)` | 给指定 QQ 发私聊（做「主动接话」这类功能用） |
 | `api.memory_add(text, kind="fact", imp=0.6, subj="", tags=[])` | 写一条记忆 |
 | `api.memory_count()` | 记忆节点数（拿不到返回 -1） |
 | `api.every(seconds, fn)` | 注册周期任务，`fn(api)` |

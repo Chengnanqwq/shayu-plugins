@@ -186,6 +186,21 @@
       ],
       "enabled_by_default": false,
       "url": "https://raw.githubusercontent.com/Chengnanqwq/shayu-plugins/main/plugins/session_probe.py"
+    },
+    {
+      "id": "session_keep",
+      "file": "session_keep.py",
+      "path": "plugins/session_keep.py",
+      "name": "新会话主动接话",
+      "version": "1.0.0",
+      "author": "ShaYu",
+      "desc": "对方开了新会话就主动接话，直到他明确说不聊为止（私聊限定，间隔与次数可配）",
+      "tags": [
+        "会话",
+        "主动"
+      ],
+      "enabled_by_default": false,
+      "url": "https://raw.githubusercontent.com/Chengnanqwq/shayu-plugins/main/plugins/session_keep.py"
     }
   ]
 }
