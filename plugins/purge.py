@@ -26,7 +26,7 @@ from pathlib import Path
 
 ENABLED = True
 NAME = "破甲面板"
-VERSION = "1.1.0"
+VERSION = "1.1.1"
 DESC = ("在 QQ / 面板里管 dsh-purge：自动定位宿主根（DSH_BASE），"
         "看补丁进度与缺口、应用、回滚（应用/回滚仅主人且要带「确认」）")
 AUTHOR = "ShaYu"
@@ -234,6 +234,26 @@ def _status_full() -> dict:
     return d
 
 
+_APPLY_WORDS = ("已清洗", "已是最新", "文件缺失", "skipped", "na patch", "全部完成",
+                "ERROR", "失败", "漂移")
+
+
+def _apply_tail(text: str, n: int = 8) -> str:
+    """apply/revert 的输出里前半截是状态表，只挑报告行，别把 200 行表格刷到群里。"""
+    picked = []
+    for line in str(text or "").splitlines():
+        s = line.strip()
+        if not s:
+            continue
+        if any(w.lower() in s.lower() for w in _APPLY_WORDS):
+            picked.append(s)
+    if not picked:
+        return "（没有报告行，可能什么都没做）"
+    if len(picked) > n:
+        picked = picked[:n] + [f"…（还有 {len(picked) - n} 行）"]
+    return "\n".join(picked)
+
+
 def _one_line(d: dict) -> str:
     if not d.get("dir"):
         return "这台机器上没装 dsh-purge，破甲这块用不了。"
@@ -348,9 +368,11 @@ async def on_message(ctx):
             return ("这会改 dsh 本体文件（提示词 + 代码 + shim + override），"
                     "要动就回：/破甲应用 确认")
         ok, txt = await asyncio.to_thread(_run, ["--apply"], 900)
-        d = _parse_status(txt)
+        # APPLY_REPORT_1106：跑完要读**应用之后**的真实状态；
+        # 以前直接解析 apply 的输出，缺少 dir 字段，会误报「没装 dsh-purge」
+        d = await asyncio.to_thread(_status_full)
         head = "应用完成：" if ok else "应用没走通："
-        return head + _one_line(d) + "\n" + _tail(txt, 6)
+        return head + _one_line(d) + "\n" + _apply_tail(txt)
 
     if low.startswith(("回滚", "revert", "关")):
         if not _flag(ctx, "is_master"):
@@ -358,7 +380,9 @@ async def on_message(ctx):
         if "确认" not in body and "confirm" not in low:
             return "回滚会用备份覆盖当前文件，要动就回：/破甲回滚 确认"
         ok, txt = await asyncio.to_thread(_run, ["--revert"], 900)
-        return ("回滚完成。" if ok else "回滚没走通：") + "\n" + _tail(txt, 8)
+        d = await asyncio.to_thread(_status_full)
+        head = "回滚完成。" if ok else "回滚没走通："
+        return head + _one_line(d) + "\n" + _apply_tail(txt)
 
     return "不认识的破甲命令，发 /破甲 看用法。"
 
