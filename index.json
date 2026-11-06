@@ -207,16 +207,16 @@
       "file": "purge.py",
       "path": "plugins/purge.py",
       "name": "破甲面板",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "author": "ShaYu",
-      "desc": "在 QQ / 面板里管 dsh-purge：/破甲状态 看补丁进度、宿主版本、注入状态；/破甲应用 确认 应用全部清洗；/破甲回滚 确认 回滚到备份。应用/回滚只有主人能用且必须带「确认」，读不到就老实说没装",
+      "desc": "在 QQ / 面板里管 dsh-purge：自动定位宿主根（DSH_BASE，找带 dsh-agent-instructions 的 @deepseek-ai 目录），/破甲状态 看补丁进度与宿主适配，/破甲缺口 列出缺文件/漂移的补丁并给结论，/破甲应用 确认、/破甲回滚 确认（仅主人 + 二次确认）",
       "tags": [
         "运维",
         "dsh",
         "破甲"
       ],
       "url": "https://raw.githubusercontent.com/Chengnanqwq/shayu-plugins/main/plugins/purge.py",
-      "size": 12414
+      "size": 18467
     }
   ]
 }
