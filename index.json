@@ -235,5 +235,11 @@
       "url": "https://raw.githubusercontent.com/Chengnanqwq/shayu-plugins/main/plugins/aux_model.py",
       "size": 7250
     }
-  ]
+  ],
+  "app": {
+    "version": "0.015",
+    "released": "2026-11-06",
+    "url": "https://github.com/Chengnanqwq/shayu/releases/tag/v0.015",
+    "notes": "修复应用内检查更新；记忆副模插件；记忆三件事"
+  }
 }
