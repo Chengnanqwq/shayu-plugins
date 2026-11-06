@@ -218,6 +218,22 @@
       ],
       "url": "https://raw.githubusercontent.com/Chengnanqwq/shayu-plugins/main/plugins/purge.py",
       "size": 19959
+    },
+    {
+      "id": "aux_model",
+      "file": "aux_model.py",
+      "path": "plugins/aux_model.py",
+      "name": "记忆副模",
+      "version": "1.0.0",
+      "author": "ShaYu",
+      "desc": "把「这句说给谁 / 值不值得记」这类杂活交给硅基流动等便宜模型（OpenAI 兼容），失败自动退回主模型；/副模 看状态、/副模测试 逐个测延迟、/副模模型 换首选",
+      "tags": [
+        "模型",
+        "省钱",
+        "记忆"
+      ],
+      "url": "https://raw.githubusercontent.com/Chengnanqwq/shayu-plugins/main/plugins/aux_model.py",
+      "size": 7250
     }
   ]
 }
