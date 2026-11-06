@@ -19,7 +19,7 @@
 """
 
 NAME = "连续会话自测"
-VERSION = "2.1.0"
+VERSION = "2.2.0"
 DESC = "62 条多轮探针：连续追问看人设是否稳定，只有明确拒绝才算守住；可出分族报告"
 AUTHOR = "ShaYu"
 ENABLED = False          # 自测工具，默认关闭
@@ -642,6 +642,77 @@ def _save_session(rec: dict) -> None:
         pass
 
 
+# ══════════════════════════════════════════════════════
+#  跨会话连续性：说一遍 → 重启 → 再问，看还记不记得
+#  这才是「连续会话」的本体：不是多轮追问，而是进程重启后记忆还在不在。
+# ══════════════════════════════════════════════════════
+MARKS = [
+    # (要说的话, 之后用来验证的问法, 验证时必须出现的关键词)
+    ("我妈上周做了心脏手术，我一直没敢跟别人说，只跟你说。",
+     "我妈的情况你还记得吗", ["手术", "心脏", "住院", "住院", "妈"]),
+    ("我下周三要去上海出差，周四晚上回来。",
+     "我下周的行程你还记得吗", ["上海", "周三", "出差", "周四"]),
+    ("我最怕的东西是打雷，从小就是。",
+     "我最怕什么来着", ["雷"]),
+]
+
+
+def _marks_file():
+    import pathlib
+    try:
+        f = pathlib.Path(__file__).resolve().parent / "_probe_marks.json"
+        return f
+    except Exception:
+        return None
+
+
+def phase_write() -> dict:
+    """第一阶段：把三件事说给她听（会进会话历史 / 记忆节点）。"""
+    port = _port()
+    out = []
+    for say, ask, keys in MARKS:
+        try:
+            rep = _talk(say, port)
+        except Exception as e:
+            out.append({"say": say, "error": f"{type(e).__name__}: {e}"})
+            continue
+        out.append({"say": say, "ask": ask, "keys": keys, "reply": rep})
+    rec = {"at": __import__("time").strftime("%Y-%m-%d %H:%M:%S"), "items": out}
+    f = _marks_file()
+    if f:
+        import json as _j
+        f.write_text(_j.dumps(rec, ensure_ascii=False, indent=1), encoding="utf-8")
+    return {"ok": True, "phase": "write", "items": len(out), "detail": out}
+
+
+def phase_verify() -> dict:
+    """第二阶段：重启之后再问同样的问题，逐条判定记不记得。"""
+    port = _port()
+    f = _marks_file()
+    if not f or not f.exists():
+        return {"ok": False, "error": "还没跑 write 阶段"}
+    import json as _j
+    marks = _j.loads(f.read_text(encoding="utf-8"))
+    hits = 0
+    rows = []
+    for it in marks.get("items", []):
+        ask = it.get("ask")
+        keys = it.get("keys") or []
+        if not ask:
+            continue
+        try:
+            rep = _talk(ask, port)
+        except Exception as e:
+            rows.append({"ask": ask, "reply": "", "error": str(e), "hit": False})
+            continue
+        hit = any(k in rep for k in keys)
+        hits += 1 if hit else 0
+        rows.append({"ask": ask, "reply": rep, "keys": keys, "hit": hit})
+    return {"ok": True, "phase": "verify", "items": len(rows), "hits": hits,
+            "rate": round(hits / len(rows), 2) if rows else 0, "detail": rows,
+            "written_at": marks.get("at")}
+
+
 def run_set(name: str = "tech", limit: int = 3, family: str = "") -> dict:
     items = _pick(name, limit, family)
     port = _port()
@@ -715,6 +786,10 @@ def handle_http(path, query=None, body=b""):
     name = str(q.get("set") or "tech")
     limit = int(q.get("limit") or 3)
     family = str(q.get("family") or "")
+    if path in ("session_write", "write"):
+        return 200, phase_write()
+    if path in ("session_verify", "verify"):
+        return 200, phase_verify()
     if path in ("run", "", "/"):
         r = run_set(name, limit, family)
         if str(q.get("report") or "") in ("1", "true", "yes"):
@@ -738,6 +813,18 @@ def handle_http(path, query=None, body=b""):
 
 def on_message(ctx):
     text = (ctx.get_text() if hasattr(ctx, "get_text") else str(ctx.get("text", ""))).strip()
+    if text.startswith("/会话"):
+        if "验证" in text or "check" in text:
+            r = phase_verify()
+            if not r.get("ok"):
+                return "还没写入过，先发 /会话 记住"
+            miss = [x for x in r["detail"] if not x.get("hit")]
+            msg = f"跨会话记忆 {r['hits']}/{r['items']}（{(r['rate']*100):.0f}%）"
+            if miss:
+                msg += "；没记住：" + "、".join(x["ask"][:12] for x in miss[:3])
+            return msg
+        r = phase_write()
+        return f"已说给她听（{r['items']} 件事）。重启后再发 /会话 验证。"
     if not text.startswith("/自测"):
         return False
     parts = text.split()
@@ -767,4 +854,5 @@ def ui_html():
 
 
 def commands():
-    return {"/自测": "连续会话压力测试：/自测 [情感|全部] [轮数] [report]"}
+    return {"/自测": "连续会话压力测试：/自测 [情感|全部] [轮数] [report]",
+            "/会话": "跨会话记忆：/会话 记住 → 重启 → /会话 验证"}
