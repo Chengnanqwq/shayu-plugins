@@ -177,9 +177,9 @@
       "file": "session_probe.py",
       "path": "plugins/session_probe.py",
       "name": "连续会话自测",
-      "version": "1.0.0",
+      "version": "2.0.0",
       "author": "ShaYu",
-      "desc": "多轮压力测试：连续追问看人设是否稳定，口径是「只有明确拒绝才算守住」",
+      "desc": "62 条多轮探针（24 个族）：连续追问看人设是否稳定；口径是只有明确拒绝才算守住，可出分族报告",
       "tags": [
         "测试",
         "开发"
